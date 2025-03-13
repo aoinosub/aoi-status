@@ -47,4 +47,4 @@ setInterval(() => {
     checkStatus(discordBotURL1, "discord-bot-status", "discord-bot-ping");
     checkStatus(discordBotURL2, "discord-bot-status2", "discord-bot-ping2");
     checkStatus(githubPagesURL, "github-pages-status", "github-pages-ping");
-}, 5000);
+}, 30000);
