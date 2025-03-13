@@ -43,54 +43,39 @@ h1 {
     transform: scale(1.05);
 }
 
+.status-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .status {
     font-weight: bold;
     padding: 6px 12px;
     border-radius: 8px;
     font-size: 14px;
-    transition: transform 0.3s ease-in-out, background 0.3s;
+    transition: background 0.3s, transform 0.3s ease-in-out;
 }
 
 .online {
     background: #28a745;
     color: white;
-    box-shadow: 0 0 10px rgba(40, 167, 69, 0.8);
 }
 
 .offline {
     background: #dc3545;
     color: white;
-    box-shadow: 0 0 10px rgba(220, 53, 69, 0.8);
 }
 
 .maintenance {
     background: #ff9800;
     color: white;
-    box-shadow: 0 0 10px rgba(255, 152, 0, 0.8);
-}
-
-.checking {
-    background: #17a2b8;
-    color: white;
-    box-shadow: 0 0 10px rgba(23, 162, 184, 0.8);
 }
 
 .ping {
     font-size: 14px;
-    color: #ddd;
-    padding: 4px 10px;
-    border-radius: 5px;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
     background: rgba(255, 255, 255, 0.15);
-    transition: transform 0.2s;
-}
-
-.ping:hover {
-    transform: scale(1.1);
-    background: rgba(255, 255, 255, 0.3);
-}
-
-/* フェードインアニメーション */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
