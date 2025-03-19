@@ -1,6 +1,6 @@
-async function checkStatus(url, statusElementId, pingElementId) {
-    const statusElement = document.getElementById(statusElementId);
-    const pingElement = document.getElementById(pingElementId);
+async function checkStatus(url, statusId, pingId) {
+    const statusElement = document.getElementById(statusId);
+    const pingElement = document.getElementById(pingId);
     statusElement.textContent = "🔄 確認中...";
     statusElement.className = "status checking";
 
@@ -11,8 +11,8 @@ async function checkStatus(url, statusElementId, pingElementId) {
 
         if (response.ok) {
             const json = await response.json();
-            const serverTimestamp = json.timestamp || startTime; // サーバーの応答時間
-            const pingTime = endTime - serverTimestamp; // Pingを計算
+            const serverTimestamp = json.timestamp || startTime;
+            const pingTime = endTime - serverTimestamp;
 
             if (json.status === "maintenance") {
                 statusElement.textContent = "🛠 メンテナンス";
@@ -33,18 +33,16 @@ async function checkStatus(url, statusElementId, pingElementId) {
     }
 }
 
-// ✅ GlitchのURL & GitHub PagesのURL
-const discordBotURL1 = "https://akane-quin.glitch.me/status";
-const discordBotURL2 = "https://koharu-quin.glitch.me/status";
-const githubPagesURL = "https://aoikozu.github.io/akane/";
+const discordBot1 = "https://akane-quin.glitch.me/status";
+const discordBot2 = "https://koharu-quin.glitch.me/status";
+const githubPages = "https://aoikozu.github.io/akane/";
 
-checkStatus(discordBotURL1, "discord-bot-status", "discord-bot-ping");
-checkStatus(discordBotURL2, "discord-bot-status2", "discord-bot-ping2");
-checkStatus(githubPagesURL, "github-pages-status", "github-pages-ping");
+checkStatus(discordBot1, "discord-bot-status", "discord-bot-ping");
+checkStatus(discordBot2, "discord-bot-status2", "discord-bot-ping2");
+checkStatus(githubPages, "github-pages-status", "github-pages-ping");
 
-// ⏳ 30秒ごとにステータスを更新
 setInterval(() => {
-    checkStatus(discordBotURL1, "discord-bot-status", "discord-bot-ping");
-    checkStatus(discordBotURL2, "discord-bot-status2", "discord-bot-ping2");
-    checkStatus(githubPagesURL, "github-pages-status", "github-pages-ping");
+    checkStatus(discordBot1, "discord-bot-status", "discord-bot-ping");
+    checkStatus(discordBot2, "discord-bot-status2", "discord-bot-ping2");
+    checkStatus(githubPages, "github-pages-status", "github-pages-ping");
 }, 30000);

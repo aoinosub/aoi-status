@@ -3,81 +3,56 @@
 body {
     font-family: 'Poppins', sans-serif;
     text-align: center;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
     color: white;
     padding: 20px;
 }
 
 .container {
     max-width: 500px;
-    margin: 0 auto;
-    background: rgba(255, 255, 255, 0.15);
+    margin: auto;
+    background: rgba(255, 255, 255, 0.2);
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
     animation: fadeIn 1s ease-in-out;
 }
 
 h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    font-weight: 700;
-    text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.3);
-}
-
-#status-container {
-    margin-top: 20px;
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
 }
 
 .service {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    transition: transform 0.3s ease-in-out;
 }
 
-.service:hover {
-    transform: scale(1.05);
-}
-
-.status-container {
+.status-wrapper {
     display: flex;
     align-items: center;
     gap: 10px;
-    justify-content: flex-end; /* 右寄せ */
 }
 
 .status {
     font-weight: bold;
     padding: 6px 12px;
     border-radius: 8px;
-    font-size: 14px;
-    transition: background 0.3s, transform 0.3s ease-in-out;
-}
-
-.online {
-    background: #28a745;
-    color: white;
-}
-
-.offline {
-    background: #dc3545;
-    color: white;
-}
-
-.maintenance {
-    background: #ff9800;
-    color: white;
+    transition: background 0.3s, transform 0.3s;
 }
 
 .ping {
     font-size: 14px;
-    color: #fff;
+    background: rgba(255, 255, 255, 0.3);
     padding: 4px 8px;
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.15);
-    text-align: right; /* 右揃え */
 }
+
+.online { background: #28a745; color: white; }
+.offline { background: #dc3545; color: white; }
+.maintenance { background: #ff9800; color: white; }
