@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
-
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: Arial, sans-serif;
     text-align: center;
     background: linear-gradient(135deg, #2c3e50, #4ca1af);
     color: white;
@@ -16,21 +14,17 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
-    animation: fadeIn 1s ease-in-out;
 }
 
 h1 {
     font-size: 24px;
     margin-bottom: 15px;
-    text-transform: uppercase;
 }
 
 .service {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
 }
 
 .status-wrapper {
@@ -40,19 +34,10 @@ h1 {
 }
 
 .status {
-    font-weight: bold;
     padding: 6px 12px;
     border-radius: 8px;
-    transition: background 0.3s, transform 0.3s;
 }
 
-.ping {
-    font-size: 14px;
-    background: rgba(255, 255, 255, 0.3);
-    padding: 4px 8px;
-    border-radius: 4px;
-}
-
-.online { background: #28a745; color: white; }
-.offline { background: #dc3545; color: white; }
-.maintenance { background: #ff9800; color: white; }
+.online { background: #28a745; }
+.maintenance { background: #ff9800; }
+.offline { background: #dc3545; }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理ページ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 サービス管理</h1>
+        <div id="login-container">
+            <input type="password" id="password" placeholder="パスワードを入力">
+            <button onclick="checkPassword()">ログイン</button>
+        </div>
+        <div id="admin-panel" style="display:none;">
+            <h2>ステータス変更</h2>
+            <div class="service">
+                <span>🟣 茜-あかね-</span>
+                <select id="akane-control">
+                    <option value="online">✅ オンライン</option>
+                    <option value="maintenance">🛠 メンテナンス</option>
+                    <option value="offline">❌ オフライン</option>
+                </select>
+            </div>
+            <div class="service">
+                <span>🔵 心春-こはる-</span>
+                <select id="koharu-control">
+                    <option value="online">✅ オンライン</option>
+                    <option value="maintenance">🛠 メンテナンス</option>
+                    <option value="offline">❌ オフライン</option>
+                </select>
+            </div>
+            <div class="service">
+                <span>🌐 公式Web</span>
+                <select id="website-control">
+                    <option value="online">✅ オンライン</option>
+                    <option value="maintenance">🛠 メンテナンス</option>
+                    <option value="offline">❌ オフライン</option>
+                </select>
+            </div>
+            <button onclick="saveStatus()">保存</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
