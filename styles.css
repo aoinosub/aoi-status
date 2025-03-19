@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-    max-width: 500px;
+    max-width: 600px;
     margin: auto;
     background: rgba(255, 255, 255, 0.2);
     padding: 20px;
@@ -41,3 +41,12 @@ h1 {
 .online { background: #28a745; }
 .maintenance { background: #ff9800; }
 .offline { background: #dc3545; }
+
+.alert-box {
+    background: #ff5555;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    display: none;
+}

@@ -1,52 +1,74 @@
-const PASSWORD = "3012";  // 🔐 管理ページのパスワード
+async function checkStatus(url, statusId, pingId) {
+    const statusElement = document.getElementById(statusId);
+    const pingElement = document.getElementById(pingId);
+    statusElement.textContent = "🔄 確認中...";
+    statusElement.className = "status checking";
 
-function saveStatus() {
-    const status = {
-        akane: document.getElementById("akane-control").value,
-        koharu: document.getElementById("koharu-control").value,
-        website: document.getElementById("website-control").value
-    };
-    localStorage.setItem("serviceStatus", JSON.stringify(status));
-    alert("ステータスが保存されました！");
+    try {
+        const startTime = Date.now();
+        const response = await fetch(url);
+        const endTime = Date.now();
+
+        if (response.ok) {
+            const json = await response.json();
+            const serverTimestamp = json.timestamp || startTime;
+            const pingTime = endTime - serverTimestamp;
+
+            if (json.status === "maintenance") {
+                statusElement.textContent = "🛠 メンテナンス";
+                statusElement.className = "status maintenance";
+                pingElement.style.display = "none"; // Pingを非表示
+            } else {
+                statusElement.textContent = "✅ オンライン";
+                statusElement.className = "status online";
+                pingElement.style.display = "inline";
+                pingElement.textContent = `${pingTime} ms`;
+            }
+        } else {
+            throw new Error("オフライン");
+        }
+    } catch (error) {
+        statusElement.textContent = "❌ オフライン";
+        statusElement.className = "status offline";
+        pingElement.style.display = "none"; // Pingを非表示
+    }
+
+    updateAlertBox();
 }
 
-function loadStatus() {
-    const status = JSON.parse(localStorage.getItem("serviceStatus")) || {
-        akane: "online",
-        koharu: "online",
-        website: "online"
-    };
+function updateAlertBox() {
+    const alertBox = document.getElementById("alert-box");
+    const statuses = document.querySelectorAll(".status");
+    let offlineOrMaintenance = [];
 
-    document.getElementById("akane-status").textContent = formatStatus(status.akane);
-    document.getElementById("akane-status").className = "status " + status.akane;
-    document.getElementById("koharu-status").textContent = formatStatus(status.koharu);
-    document.getElementById("koharu-status").className = "status " + status.koharu;
-    document.getElementById("website-status").textContent = formatStatus(status.website);
-    document.getElementById("website-status").className = "status " + status.website;
-}
+    statuses.forEach(status => {
+        if (status.classList.contains("offline")) {
+            offlineOrMaintenance.push(`${status.previousElementSibling.textContent} はオフラインです ❌`);
+        } else if (status.classList.contains("maintenance")) {
+            offlineOrMaintenance.push(`${status.previousElementSibling.textContent} はメンテナンス中 🛠`);
+        }
+    });
 
-function formatStatus(status) {
-    return status === "online" ? "✅ オンライン" :
-           status === "maintenance" ? "🛠 メンテナンス" : "❌ オフライン";
-}
-
-function checkPassword() {
-    const input = document.getElementById("password").value;
-    if (input === PASSWORD) {
-        document.getElementById("login-container").style.display = "none";
-        document.getElementById("admin-panel").style.display = "block";
+    if (offlineOrMaintenance.length > 0) {
+        alertBox.innerHTML = offlineOrMaintenance.join("<br>");
+        alertBox.style.display = "block";
     } else {
-        alert("パスワードが違います！");
+        alertBox.style.display = "none";
     }
 }
 
-if (document.getElementById("admin-panel")) {
-    const status = JSON.parse(localStorage.getItem("serviceStatus")) || {};
-    document.getElementById("akane-control").value = status.akane || "online";
-    document.getElementById("koharu-control").value = status.koharu || "online";
-    document.getElementById("website-control").value = status.website || "online";
-}
+// ✅ GlitchのURL & GitHub PagesのURL
+const discordBot1 = "https://akane-quin.glitch.me/status";
+const discordBot2 = "https://koharu-quin.glitch.me/status";
+const githubPages = "https://aoikozu.github.io/akane/";
 
-if (document.getElementById("status-container")) {
-    loadStatus();
-}
+checkStatus(discordBot1, "discord-bot-status", "discord-bot-ping");
+checkStatus(discordBot2, "discord-bot-status2", "discord-bot-ping2");
+checkStatus(githubPages, "github-pages-status", "github-pages-ping");
+
+// ⏳ 30秒ごとにステータスを更新
+setInterval(() => {
+    checkStatus(discordBot1, "discord-bot-status", "discord-bot-ping");
+    checkStatus(discordBot2, "discord-bot-status2", "discord-bot-ping2");
+    checkStatus(githubPages, "github-pages-status", "github-pages-ping");
+}, 30000);
