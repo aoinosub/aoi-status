@@ -6,28 +6,31 @@ async function checkStatus(url, statusId, pingId) {
 
     try {
         const startTime = Date.now();
-        const response = await fetch(url);
+        const response = await fetch(url, { cache: "no-store" }); // キャッシュを無効化
         const endTime = Date.now();
 
-        if (response.ok) {
-            const json = await response.json();
-            const serverTimestamp = json.timestamp || startTime;
-            const pingTime = endTime - serverTimestamp;
+        if (!response.ok) {
+            throw new Error(`HTTPエラー: ${response.status}`);
+        }
 
-            if (json.status === "maintenance") {
-                statusElement.textContent = "🛠 メンテナンス";
-                statusElement.className = "status maintenance";
-                pingElement.style.display = "none"; // Pingを非表示
-            } else {
-                statusElement.textContent = "✅ オンライン";
-                statusElement.className = "status online";
-                pingElement.style.display = "inline";
-                pingElement.textContent = `${pingTime} ms`;
-            }
+        const json = await response.json();
+        const serverTimestamp = json.timestamp || startTime;
+        const pingTime = endTime - serverTimestamp;
+
+        if (json.status === "maintenance") {
+            statusElement.textContent = "🛠 メンテナンス";
+            statusElement.className = "status maintenance";
+            pingElement.style.display = "none"; // Pingを非表示
+        } else if (json.status === "online") {
+            statusElement.textContent = "✅ オンライン";
+            statusElement.className = "status online";
+            pingElement.style.display = "inline";
+            pingElement.textContent = `${pingTime} ms`;
         } else {
-            throw new Error("オフライン");
+            throw new Error("予期しないレスポンス");
         }
     } catch (error) {
+        console.error(`エラー: ${error.message}`); // 🛑 エラーをログ出力
         statusElement.textContent = "❌ オフライン";
         statusElement.className = "status offline";
         pingElement.style.display = "none"; // Pingを非表示
@@ -36,6 +39,7 @@ async function checkStatus(url, statusId, pingId) {
     updateAlertBox();
 }
 
+// お知らせ機能
 function updateAlertBox() {
     const alertBox = document.getElementById("alert-box");
     const statuses = document.querySelectorAll(".status");
